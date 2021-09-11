@@ -2,61 +2,64 @@
 <html>
 
 <head>
-    <meta charset="UTF-8" />
-    <title>Small weather application</title>
+  <meta charset="UTF-8" />
+  <title>Small weather application</title>
 </head>
 
 <body>
 
-    <div id="root"></div>
+  <div id="root"></div>
 
-    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
 
-    <script type="text/babel">
+  <script type="text/babel">
 
-        function CustomWeather() {
+    function CustomWeather() {
 
-            const [name, setName] = React.useState('');
-            const [temperature, setTemperature] = React.useState('');
-            const [description, setDescription] = React.useState('');
-            const [icon, setIcon] = React.useState('');
-            const [isLoading, setLoading] = React.useState(false);
+      const [name, setName] = React.useState('');
+      const [temperature, setTemperature] = React.useState('');
+      const [description, setDescription] = React.useState('');
+      const [icon, setIcon] = React.useState('');
+      const [isLoading, setLoading] = React.useState(false);
 
-            const getWeather = () => {
-                fetch(`https://api.openweathermap.org/data/2.5/weather?q=${name}&APPID=1c503b9d5f7a258a35b97d4c4e24c002`)
+      const getWeather = () => {
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${name}&APPID=1c503b9d5f7a258a35b97d4c4e24c002`)
 
-                    .then(response => response.json())
+          .then(response => response.json())
 
-                    .then(data => {
-                        setName(data.name);
-                        setTemperature(data.main.temp);
-                        setDescription(data.weather[0].description);
-                        setIcon(data.weather[0].icon);
-                        setLoading(true);
-                    })
+          .then(data => {
+            setName(data.name);
+            setTemperature(data.main.temp);
+            setDescription(data.weather[0].description);
+            setIcon(data.weather[0].icon);
+            setLoading(true);
+          })
 
-                    .catch(err => console.error(err));
+          .catch(err => console.error(err));
 
-                if (!isLoading) {
-                    return <div>Loading...</div>;
-                }
-            }
-
-            return (
-                <div>
-                    <input value={name} onChange={event => setName(event.target.value)} />
-                    <button onClick={getWeather}>Get Weather</button>
-                    <p>Temperature: {temperature}</p>
-                    <p>Weather: {description}</p>
-                    <img src={`http://openweathermap.org/img/wn/${icon}@2x.png`} />
-                </div>
-            );
+        if (!isLoading) {
+          return <div>Loading...</div>;
         }
+      }
 
-        ReactDOM.render(<CustomWeather />, document.getElementById('root'));
-    </script>
+      return (
+        <div>
+
+          <input value={name} onChange={event => setName(event.target.value)} /> 
+          <button onClick={getWeather}>Get Weather</button>
+          <p>Temperature: {temperature}</p>
+          <p>Weather: {description}</p>
+          <img src= {`http://openweathermap.org/img/wn/${icon}@2x.png`} />
+        </div>
+      );
+
+    }
+
+    ReactDOM.render(<CustomWeather />, document.getElementById('root'));
+
+  </script>
 </body>
 
 </html>
